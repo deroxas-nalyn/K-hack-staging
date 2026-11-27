@@ -1,0 +1,246 @@
+---
+import { Image } from "astro:assets";
+import sumigawaImage from "../assets/members/sumigawa.jpg";
+import SectionTitle from "../components/SectionTitle.astro";
+import Layout from "../layouts/Layout.astro";
+
+const features = [
+	{
+		title: "多様な開発実績",
+		description:
+			"金融、不動産、メディア、アパレル、小売など、多様な業種の大手企業向け開発を担っています。",
+	},
+	{
+		title: "地域DX支援と人材育成",
+		description:
+			"副業や地域DX支援を通じて、最先端の経験を地元企業の改善につなげる人材を育成します。",
+	},
+	{
+		title: "地域に根ざした経営基盤",
+		description:
+			"地域に根ざした出資者構成を背景に、短期利益ではなく継続的な価値提供を重視します。",
+	},
+	{
+		title: "移住者も働きやすい環境",
+		description:
+			"社員寮やシェアカーなど、地方でキャリアを築くうえで必要な支援を整えています。",
+	},
+];
+
+const companyProfile = [
+	{ label: "社名", value: "株式会社k-Hack" },
+	{ label: "英文社名", value: "K-HACK Inc." },
+	{ label: "設立", value: "2023年6月" },
+	{ label: "本社所在地", value: "〒085-0015 北海道釧路市北大通3-7-3" },
+	{ label: "資本金", value: "54万円" },
+];
+
+const officers = [
+	"代表取締役 澄川 誠治",
+	"取締役 田辺 貴久",
+	"監査役 松並 邦拓",
+];
+
+const investors = [
+	"釧路市",
+	"釧路商工会議所",
+	"阿寒町商工会",
+	"音別町商工会",
+	"一般社団法人釧路地域DX推進協会",
+	"釧路信用金庫",
+	"釧路信用組合",
+	"大地みらい信用金庫",
+	"株式会社北洋銀行",
+];
+
+const businessLines = [
+	{
+		title: "システムインテグレーション事業",
+		items: [
+			"大手企業向けシステムコンサルティング",
+			"基幹システムの開発・保守・運用",
+			"Webアプリケーション開発",
+			"モバイルアプリケーション開発",
+		],
+	},
+	{
+		title: "地域DX支援事業",
+		items: [
+			"地域企業向けDXコンサルティング",
+			"業務改善ソリューション提供",
+			"デジタル化支援サービス",
+		],
+	},
+	{
+		title: "人材育成事業",
+		items: [
+			"IT人材の育成・教育プログラム",
+			"地域のDX人材育成支援",
+			"技術研究・情報発信活動",
+		],
+	},
+];
+---
+
+<Layout title="会社概要 | 株式会社k-Hack">
+	<section class="page-hero">
+		<div class="page-hero-content">
+			<p class="brand-kicker mb-4">会社概要</p>
+			<h1 class="max-w-4xl text-4xl font-extrabold tracking-[-0.05em] text-brand-ink md:text-6xl">
+				k-Hackの会社概要と
+				<br />
+				事業内容について
+			</h1>
+		</div>
+	</section>
+
+	<section class="section-shell">
+		<div class="site-shell">
+			<SectionTitle eyebrow="MESSAGE">CEOメッセージ</SectionTitle>
+			<div class="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+				<div class="surface-panel overflow-hidden rounded-[2rem]">
+					<Image
+						src={sumigawaImage}
+						alt="澄川 誠治 CEO"
+						class="h-[28rem] w-full object-cover"
+						width={720}
+						height={900}
+						quality={86}
+					/>
+					<div class="px-6 py-6 md:px-8">
+						<p class="text-xs font-bold uppercase tracking-[0.28em] text-brand-stone">
+							代表取締役
+						</p>
+						<p class="mt-2 text-2xl font-extrabold tracking-[-0.04em] text-brand-ink">
+							澄川 誠治
+						</p>
+					</div>
+				</div>
+
+				<div class="surface-panel rounded-[2rem] px-6 py-8 md:px-10">
+					<div class="space-y-6 text-sm leading-8 text-brand-ink-muted md:text-base">
+						<p>
+							我々k-Hackが世の中に提供する価値は
+							<span class="font-bold text-brand-red">一人一人の従業員そのもの</span>
+							です。SI事業を生業とする会社なので、質と量を兼ね備えた開発工数を通して企業や地域の発展に貢献していくのは当然のことではあります。
+						</p>
+						<p>
+							ただ、我々が掲げる提供価値が他同業種企業と異なる点は、
+							<span class="font-bold text-brand-red">「人材の輩出」</span>
+							であることです。釧路に集った志の高いエンジニアが刺激し合いながら成長する場がk-Hackです。
+						</p>
+						<p>
+							その成長した社員各々の、副業や独立や転職などのキャリア形成を支援するのもk-Hackです。卒業者がクライアントや仲間同士とつながっていくコミュニティの核になることも目指しています。
+						</p>
+						<p>
+							公的機関がオーナーであり、株主への利益還元を重要視しない我々の経営の判断基準は、
+							<span class="font-bold text-brand-red">「正しさ」より「優しさ」</span>
+							を大切にします。
+						</p>
+						<p class="border-t border-black/8 pt-6 text-lg font-bold tracking-[-0.03em] text-brand-ink">
+							成長意欲が高く、「優しい」方のジョインを心からお待ちしています。
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-shell border-y border-black/8 bg-brand-panel/70">
+		<div class="site-shell">
+			<SectionTitle eyebrow="FEATURES">特徴</SectionTitle>
+			<div class="grid gap-6 md:grid-cols-2">
+				{
+					features.map((feature) => (
+						<div class="surface-panel rounded-[1.6rem] px-6 py-6 md:px-8">
+							<div class="mb-5 h-4 w-4 rotate-45 bg-brand-red"></div>
+							<h3 class="text-2xl font-extrabold tracking-[-0.04em] text-brand-ink">
+								{feature.title}
+							</h3>
+							<p class="mt-4 text-sm leading-7 text-brand-ink-muted md:text-base">
+								{feature.description}
+							</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="section-shell">
+		<div class="site-shell grid gap-10 xl:grid-cols-[0.9fr_1.1fr]">
+			<div>
+				<SectionTitle eyebrow="PROFILE">会社概要</SectionTitle>
+				<div class="surface-panel rounded-[2rem]">
+					<dl class="divide-y divide-black/8">
+						{
+							companyProfile.map((item) => (
+								<div class="grid gap-2 px-6 py-5 md:grid-cols-[10rem_1fr] md:px-8">
+									<dt class="text-xs font-bold uppercase tracking-[0.28em] text-brand-stone">
+										{item.label}
+									</dt>
+									<dd class="text-sm leading-7 text-brand-ink md:text-base">
+										{item.value}
+									</dd>
+								</div>
+							))
+						}
+					</dl>
+				</div>
+			</div>
+
+			<div class="grid gap-8">
+				<div class="surface-panel rounded-[2rem] px-6 py-6 md:px-8">
+					<p class="brand-kicker mb-5">役員</p>
+					<ul class="grid gap-4">
+						{
+							officers.map((officer) => (
+								<li class="border-t border-black/8 pt-4 text-base text-brand-ink">
+									{officer}
+								</li>
+							))
+						}
+					</ul>
+				</div>
+
+				<div class="surface-panel rounded-[2rem] px-6 py-6 md:px-8">
+					<p class="brand-kicker mb-5">出資者</p>
+					<div class="grid gap-3 md:grid-cols-2">
+						{
+							investors.map((investor) => (
+								<div class="border-t border-black/8 pt-3 text-sm leading-7 text-brand-ink-muted md:text-base">
+									{investor}
+								</div>
+							))
+						}
+					</div>
+				</div>
+
+				<div class="surface-panel rounded-[2rem] px-6 py-6 md:px-8">
+					<p class="brand-kicker mb-5">事業内容</p>
+					<div class="grid gap-6">
+						{
+							businessLines.map((line) => (
+								<div class="border-t border-black/8 pt-5">
+									<h3 class="text-xl font-extrabold tracking-[-0.04em] text-brand-ink">
+										{line.title}
+									</h3>
+									<ul class="mt-4 grid gap-3">
+										{
+											line.items.map((item) => (
+												<li class="flex items-start gap-3 text-sm leading-7 text-brand-ink-muted md:text-base">
+													<div class="mt-2 h-2.5 w-2.5 rotate-45 bg-brand-red"></div>
+													<span>{item}</span>
+												</li>
+											))
+										}
+									</ul>
+								</div>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>

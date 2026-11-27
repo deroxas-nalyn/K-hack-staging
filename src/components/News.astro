@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content";
+import Card from "./Card.astro";
+import SectionTitle from "./SectionTitle.astro";
+
+const newsEntries = await getCollection("news");
+const sortedNews = newsEntries.sort(
+	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+---
+
+<section id="news" class="section-shell border-t border-black/8 bg-white/40">
+  <div class="site-shell">
+    <SectionTitle eyebrow="NEWS">ニュース</SectionTitle>
+    <div class="space-y-5">
+      {sortedNews.map((news) => (
+        <Card 
+          title={news.data.title}
+          date={news.data.date}
+          description={news.data.description}
+          linkUrl={`/news/${news.slug}`}
+          type="news"
+        />
+      ))}
+    </div>
+    <div class="mt-10 text-right">
+      <a href="/news" class="cta-secondary">
+        すべて見る
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

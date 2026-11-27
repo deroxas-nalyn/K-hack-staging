@@ -1,0 +1,38 @@
+---
+import { getImagePath, members } from "../data/members";
+import Card from "./Card.astro";
+import SectionTitle from "./SectionTitle.astro";
+
+// 画像が設定されているメンバーだけをフィルタリング
+const membersWithImages = members.filter((member) => member.imageFilename);
+const topMembers = membersWithImages.slice(0, 8);
+const memberImages = await Promise.all(
+	topMembers.map((member) => getImagePath(member)),
+);
+---
+
+<section id="members" class="section-shell">
+  <div class="site-shell">
+    <SectionTitle eyebrow="MEMBERS">メンバー</SectionTitle>
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4">
+      {topMembers.map((member, index) => (
+        <Card
+          title={member.name}
+          name={member.name}
+          jobTitle={member.jobTitle}
+          imageUrl={memberImages[index]}
+          type="members"
+        />
+      ))}
+    </div>
+
+    <div class="mt-10 text-right">
+      <a href="/members" class="cta-secondary">
+        すべて見る
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

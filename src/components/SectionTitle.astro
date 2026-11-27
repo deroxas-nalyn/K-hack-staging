@@ -1,0 +1,18 @@
+---
+interface Props {
+	id?: string;
+	eyebrow?: string;
+}
+
+const { id, eyebrow = "K-HACK" } = Astro.props;
+---
+
+<div class="mb-10 md:mb-14">
+	<p class="brand-kicker mb-4">{eyebrow}</p>
+	<h2
+		id={id}
+		class="max-w-4xl text-3xl font-extrabold leading-tight tracking-[-0.04em] text-brand-ink md:text-5xl"
+	>
+		<slot />
+	</h2>
+</div>

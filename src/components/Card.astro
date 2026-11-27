@@ -1,0 +1,78 @@
+---
+import type { ImageMetadata } from "astro";
+import CardContent from "./CardContent.astro";
+
+interface Props {
+	title: string;
+	imageUrl?: ImageMetadata;
+	description?: string;
+	linkUrl?: string;
+	name?: string;
+	jobTitle?: string;
+	date?: string;
+	type: "about" | "services" | "members" | "news";
+	isExternal?: boolean;
+}
+
+const {
+	title,
+	imageUrl,
+	description,
+	linkUrl,
+	name,
+	jobTitle,
+	date,
+	type,
+	isExternal = false,
+} = Astro.props;
+
+const ariaLabel =
+	type === "about"
+		? `${title}を見る${isExternal ? "（外部サイト）" : ""}`
+		: type === "news"
+			? `ニュース「${title}」を読む`
+			: isExternal
+				? `${title}（外部サイト）`
+				: undefined;
+
+const interactiveClass = linkUrl
+	? "group block transition duration-300 hover:-translate-y-1"
+	: "block";
+---
+
+<div class={interactiveClass}>
+	{
+		linkUrl ? (
+			<a
+				href={linkUrl}
+				class="block rounded-[1.75rem] focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2"
+				aria-label={ariaLabel}
+			>
+				<CardContent
+					title={title}
+					imageUrl={imageUrl}
+					description={description}
+					name={name}
+					jobTitle={jobTitle}
+					date={date}
+					type={type}
+					isExternal={isExternal}
+				>
+					<slot />
+				</CardContent>
+			</a>
+		) : (
+			<CardContent
+				title={title}
+				imageUrl={imageUrl}
+				description={description}
+				name={name}
+				jobTitle={jobTitle}
+				date={date}
+				type={type}
+			>
+				<slot />
+			</CardContent>
+		)
+	}
+</div>

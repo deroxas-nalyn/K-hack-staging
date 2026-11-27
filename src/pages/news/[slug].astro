@@ -1,0 +1,95 @@
+---
+import { getCollection } from "astro:content";
+import {
+	faFacebook,
+	faLinkedin,
+	faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+	const newsEntries = await getCollection("news");
+	return newsEntries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const shareLinks = [
+	{
+		label: "X でシェア",
+		href: `https://twitter.com/intent/tweet?url=${Astro.url}&text=${encodeURIComponent(entry.data.title)}`,
+		icon: faXTwitter.icon[4] as string,
+	},
+	{
+		label: "Facebook でシェア",
+		href: `https://www.facebook.com/sharer/sharer.php?u=${Astro.url}`,
+		icon: faFacebook.icon[4] as string,
+	},
+	{
+		label: "LinkedIn でシェア",
+		href: `https://www.linkedin.com/sharing/share-offsite/?url=${Astro.url}`,
+		icon: faLinkedin.icon[4] as string,
+	},
+];
+---
+
+<Layout title={entry.data.title}>
+	<section class="page-hero">
+		<div class="page-hero-content">
+			<a
+				href="/news"
+				class="brand-kicker mb-4 inline-flex transition hover:text-brand-red"
+			>
+				ニュース一覧
+			</a>
+			<p class="text-xs font-bold uppercase tracking-[0.28em] text-brand-stone">
+				{entry.data.date}
+			</p>
+			<h1 class="mt-4 max-w-4xl text-4xl font-extrabold tracking-[-0.05em] text-brand-ink md:text-6xl">
+				{entry.data.title}
+			</h1>
+			<p class="mt-6 max-w-2xl text-lg leading-8 text-brand-ink-muted">
+				{entry.data.description}
+			</p>
+		</div>
+	</section>
+
+	<section class="section-shell pt-14">
+		<div class="site-shell grid gap-8 xl:grid-cols-[0.78fr_1.22fr]">
+			<aside class="space-y-4">
+				<div class="surface-panel rounded-[1.8rem] p-6">
+					<p class="brand-kicker mb-5">共有</p>
+					<div class="grid gap-3">
+						{
+							shareLinks.map((link) => (
+								<a
+									href={link.href}
+									target="_blank"
+									rel="noopener noreferrer"
+									aria-label={`${link.label}（新しいタブで開く）`}
+									class="inline-flex items-center gap-3 border border-black/8 bg-white/80 px-4 py-3 text-sm font-semibold text-brand-ink transition hover:border-brand-red hover:text-brand-red"
+								>
+									<svg width="24" height="24" viewBox="0 0 512 512" class="h-4 w-4" fill="currentColor">
+										<path d={link.icon}></path>
+									</svg>
+									<span>{link.label}</span>
+									<span class="sr-only">新しいタブで開きます</span>
+								</a>
+							))
+						}
+					</div>
+				</div>
+			</aside>
+
+			<article class="surface-panel rounded-[2rem] px-6 py-8 md:px-10">
+				<div class="prose prose-lg">
+					<Content />
+				</div>
+			</article>
+		</div>
+	</section>
+</Layout>

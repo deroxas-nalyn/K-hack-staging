@@ -1,0 +1,40 @@
+---
+import Card from "../components/Card.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { getImagePath, members } from "../data/members";
+import Layout from "../layouts/Layout.astro";
+
+const memberImages = await Promise.all(
+	members.map((member) => getImagePath(member)),
+);
+---
+
+<Layout title="メンバー一覧 | 株式会社K-HACK">
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <p class="brand-kicker mb-4">メンバー</p>
+      <h1 class="max-w-4xl text-4xl font-extrabold tracking-[-0.05em] text-brand-ink md:text-6xl">
+        釧路で働く
+        <br />
+        k-Hack のメンバー。
+      </h1>
+    </div>
+  </section>
+
+  <section class="section-shell">
+    <div class="site-shell">
+      <SectionTitle eyebrow="MEMBERS">メンバー一覧</SectionTitle>
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4">
+        {members.map((member, index) => (
+          <Card
+            title={member.name}
+            name={member.name}
+            jobTitle={member.jobTitle}
+            imageUrl={memberImages[index]}
+            type="members"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

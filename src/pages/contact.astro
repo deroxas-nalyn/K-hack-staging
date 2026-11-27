@@ -1,0 +1,91 @@
+---
+import SectionTitle from "../components/SectionTitle.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="お問い合わせ | 株式会社k-Hack">
+	<section class="page-hero">
+		<div class="page-hero-content">
+			<p class="brand-kicker mb-4">お問い合わせ</p>
+			<h1 class="max-w-4xl text-4xl font-extrabold tracking-[-0.05em] text-brand-ink md:text-6xl">
+				システム開発や地域DXの
+				<br />
+				ご相談を受け付けています。
+			</h1>
+			<p class="mt-6 max-w-2xl text-lg leading-8 text-brand-ink-muted">
+				システム開発、地域DX、採用、協業など。内容を確認のうえ、担当者から折り返しご連絡します。
+			</p>
+		</div>
+	</section>
+
+	<section class="section-shell">
+		<div class="site-shell grid gap-8 xl:grid-cols-[0.88fr_1.12fr]">
+			<div class="grid gap-8">
+				<div class="surface-panel rounded-[2rem] px-6 py-6 md:px-8">
+					<SectionTitle eyebrow="CONTACT">お問い合わせ</SectionTitle>
+					<p class="section-intro">
+						お問い合わせ内容を確認のうえ、担当者よりご連絡します。フォームの利用が難しい場合は、メールでも受け付けています。
+					</p>
+				</div>
+
+				<div class="surface-panel rounded-[2rem] px-6 py-6 md:px-8">
+					<p class="brand-kicker mb-5">連絡先</p>
+					<div class="grid gap-6">
+						<div class="border-t border-black/8 pt-4">
+							<p class="text-xs font-bold uppercase tracking-[0.28em] text-brand-stone">
+								メール
+							</p>
+							<a
+								href="mailto:hello@k-hack.co.jp"
+								class="mt-3 inline-block text-xl font-extrabold tracking-[-0.04em] text-brand-ink transition hover:text-brand-red"
+							>
+								hello@k-hack.co.jp
+							</a>
+						</div>
+						<div class="border-t border-black/8 pt-4">
+							<p class="text-xs font-bold uppercase tracking-[0.28em] text-brand-stone">
+								所在地
+							</p>
+							<p class="mt-3 text-sm leading-7 text-brand-ink-muted md:text-base">
+								〒085-0015
+								<br />
+								北海道釧路市北大通3-7-3
+							</p>
+						</div>
+						<p class="border-t border-black/8 pt-4 text-sm leading-7 text-brand-ink-muted md:text-base">
+							埋め込みフォームの操作が難しい場合は、メールでのご連絡をご利用ください。
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="surface-panel rounded-[2rem] p-4 md:p-6">
+				<div class="mb-5 flex items-center justify-between gap-4 border-b border-black/8 pb-4">
+					<p class="brand-kicker">お問い合わせフォーム</p>
+					<div class="h-5 w-5 rotate-45 bg-brand-red"></div>
+				</div>
+				<div class="relative w-full overflow-hidden rounded-[1.5rem] border border-black/8 bg-white" style="padding-bottom: 75%;">
+					<p id="contact-form-description" class="sr-only">
+						Microsoft Forms の埋め込みフォームです。フォームの利用が難しい場合は、メールアドレス hello@k-hack.co.jp からお問い合わせください。
+					</p>
+					<iframe
+						src="https://forms.office.com/r/FET13Pg422?embed=true"
+						class="absolute inset-0 h-full w-full border-0"
+						allowfullscreen
+						title="お問い合わせフォーム"
+						aria-describedby="contact-form-description"
+					>
+					</iframe>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	@media (max-width: 640px) {
+		div[style*="padding-bottom: 75%"] {
+			padding-bottom: 96% !important;
+		}
+	}
+</style>

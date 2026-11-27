@@ -1,0 +1,134 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Card from "../../components/Card.astro";
+import SectionTitle from "../../components/SectionTitle.astro";
+
+const page = Number(Astro.url.searchParams.get("page") || "1");
+const itemsPerPage = 10;
+
+const newsEntries = await getCollection("news");
+const sortedNews = newsEntries.sort(
+	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+
+const totalPages = Math.ceil(sortedNews.length / itemsPerPage);
+const currentPageItems = sortedNews.slice(
+	(page - 1) * itemsPerPage,
+	page * itemsPerPage,
+);
+
+// ページネーションの表示範囲を計算
+const maxPagesShown = 5;
+let startPage = Math.max(1, page - Math.floor(maxPagesShown / 2));
+const endPage = Math.min(totalPages, startPage + maxPagesShown - 1);
+
+// 表示範囲の調整
+if (endPage - startPage + 1 < maxPagesShown) {
+	startPage = Math.max(1, endPage - maxPagesShown + 1);
+}
+
+---
+
+<Layout title="ニュース一覧 - 株式会社k-Hack">
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <p class="brand-kicker mb-4">ニュース</p>
+      <h1 class="max-w-4xl text-4xl font-extrabold tracking-[-0.05em] text-brand-ink md:text-6xl">
+        k-Hack からの
+        <br />
+        お知らせ一覧
+      </h1>
+    </div>
+  </section>
+
+  <section class="section-shell min-h-screen">
+    <div class="site-shell">
+      <SectionTitle eyebrow="NEWS">ニュース一覧</SectionTitle>
+      <div class="space-y-5">
+        {currentPageItems.map((news) => (
+          <Card
+            title={news.data.title}
+            date={news.data.date}
+            description={news.data.description}
+            linkUrl={`/news/${news.slug}`}
+            type="news"
+          />
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <div class="mt-10">
+          <nav class="flex flex-wrap justify-center gap-2" aria-label="ページネーション">
+            {page > 1 && (
+              <a
+                href={`/news?page=${page - 1}`}
+                class="inline-flex h-11 w-11 items-center justify-center border border-black/10 bg-white/70 text-brand-ink transition hover:border-brand-red hover:text-brand-red"
+                aria-label="前のページ"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            )}
+
+            {startPage > 1 && (
+              <>
+                <a
+                  href="/news?page=1"
+                  class="inline-flex h-11 min-w-11 items-center justify-center border border-black/10 bg-white/70 px-4 text-sm font-semibold text-brand-ink transition hover:border-brand-red hover:text-brand-red"
+                >
+                  1
+                </a>
+                {startPage > 2 && (
+                  <span class="inline-flex h-11 items-center justify-center px-3 text-brand-stone">...</span>
+                )}
+              </>
+            )}
+
+            {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map((num) => (
+              <a
+                href={`/news?page=${num}`}
+                class={`inline-flex h-11 min-w-11 items-center justify-center px-4 text-sm font-semibold transition ${
+                  page === num
+                    ? "border border-brand-red bg-brand-red text-white"
+                    : "border border-black/10 bg-white/70 text-brand-ink hover:border-brand-red hover:text-brand-red"
+                }`}
+                aria-current={page === num ? "page" : undefined}
+                aria-label={page === num ? `ページ ${num}、現在のページ` : `ページ ${num}`}
+              >
+                {num}
+              </a>
+            ))}
+
+            {endPage < totalPages && (
+              <>
+                {endPage < totalPages - 1 && (
+                  <span class="inline-flex h-11 items-center justify-center px-3 text-brand-stone">...</span>
+                )}
+                <a
+                  href={`/news?page=${totalPages}`}
+                  class="inline-flex h-11 min-w-11 items-center justify-center border border-black/10 bg-white/70 px-4 text-sm font-semibold text-brand-ink transition hover:border-brand-red hover:text-brand-red"
+                >
+                  {totalPages}
+                </a>
+              </>
+            )}
+
+            {page < totalPages && (
+              <a
+                href={`/news?page=${page + 1}`}
+                class="inline-flex h-11 w-11 items-center justify-center border border-black/10 bg-white/70 text-brand-ink transition hover:border-brand-red hover:text-brand-red"
+                aria-label="次のページ"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            )}
+          </nav>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

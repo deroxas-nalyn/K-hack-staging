@@ -1,0 +1,206 @@
+---
+interface Props {
+	navLinks: {
+		href: string;
+		text: string;
+	}[];
+	actionButtons: {
+		href: string;
+		text: string;
+		isExternal?: boolean;
+	}[];
+}
+
+const { navLinks, actionButtons } = Astro.props;
+---
+
+<mobile-menu>
+	<div
+		id="mobile-menu"
+		data-mobile-menu
+		class="surface-panel absolute inset-x-0 top-full hidden border-t border-black/8 md:hidden"
+		hidden
+	>
+		<div class="site-shell py-6">
+			<nav class="flex flex-col gap-6" aria-label="モバイルメニュー">
+				<div class="flex flex-col gap-2">
+					{
+						navLinks.map((link) => (
+							<a
+								href={link.href}
+								data-menu-link
+								class="border-b border-black/6 py-3 text-sm font-semibold tracking-[0.14em] text-brand-ink transition hover:text-brand-red focus:outline-none focus:ring-2 focus:ring-brand-red focus:ring-offset-2"
+							>
+								{link.text}
+							</a>
+						))
+					}
+				</div>
+				<div class="flex flex-col gap-3 pt-2">
+					{
+						actionButtons.map((button) => (
+							<a
+								href={button.href}
+								data-menu-link
+								class="cta-primary justify-center text-[0.72rem]"
+								aria-label={button.isExternal
+									? `${button.text}（外部サイト）`
+									: undefined}
+							>
+								{button.text}
+								{button.isExternal && (
+									<svg
+										class="h-3.5 w-3.5"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+										aria-hidden="true"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+										/>
+									</svg>
+								)}
+							</a>
+						))
+					}
+				</div>
+			</nav>
+		</div>
+	</div>
+</mobile-menu>
+
+<script>
+	class MobileMenu extends HTMLElement {
+		private isOpen = false;
+		private handleButtonClick = () => this.toggleMenu();
+		private handleLinkClick = () => this.closeMenu({ restoreFocus: false });
+		private handleDocumentClick = (event: MouseEvent) => {
+			if (!this.isOpen) return;
+
+			const target = event.target;
+			if (target instanceof Node && !this.contains(target) && !this.button?.contains(target)) {
+				this.closeMenu();
+			}
+		};
+		private handleKeydown = (event: KeyboardEvent) => {
+			if (event.key === "Escape" && this.isOpen) {
+				this.closeMenu();
+			}
+		};
+
+		connectedCallback() {
+			this.setupEventListeners();
+			this.updateMenuState();
+		}
+
+		disconnectedCallback() {
+			this.cleanupEventListeners();
+		}
+
+		get menu(): HTMLElement | null {
+			return this.querySelector("[data-mobile-menu]");
+		}
+
+		get button(): HTMLButtonElement | null {
+			return this.closest("header")?.querySelector("[data-menu-button]") || null;
+		}
+
+		get focusableElements(): HTMLElement[] {
+			if (!this.menu) return [];
+
+			return Array.from(
+				this.menu.querySelectorAll<HTMLElement>(
+					'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+				),
+			).filter((element) => !element.hasAttribute("hidden"));
+		}
+
+		get hamburgerIcon(): Element | null {
+			return this.button?.querySelector('[data-icon="hamburger"]') || null;
+		}
+
+		get closeIcon(): Element | null {
+			return this.button?.querySelector('[data-icon="close"]') || null;
+		}
+
+		setupEventListeners() {
+			this.cleanupEventListeners();
+			this.button?.addEventListener("click", this.handleButtonClick);
+
+			this.menu?.querySelectorAll("a").forEach((link) => {
+				link.addEventListener("click", this.handleLinkClick);
+			});
+
+			document.addEventListener("click", this.handleDocumentClick);
+			document.addEventListener("keydown", this.handleKeydown);
+		}
+
+		cleanupEventListeners() {
+			this.button?.removeEventListener("click", this.handleButtonClick);
+
+			this.menu?.querySelectorAll("a").forEach((link) => {
+				link.removeEventListener("click", this.handleLinkClick);
+			});
+
+			document.removeEventListener("click", this.handleDocumentClick);
+			document.removeEventListener("keydown", this.handleKeydown);
+		}
+
+		toggleMenu() {
+			if (this.isOpen) {
+				this.closeMenu();
+				return;
+			}
+
+			this.openMenu();
+		}
+
+		openMenu() {
+			this.isOpen = true;
+			this.updateMenuState();
+			this.focusFirstItem();
+		}
+
+		closeMenu(options: { restoreFocus?: boolean } = {}) {
+			this.isOpen = false;
+			this.updateMenuState();
+			if (options.restoreFocus !== false) {
+				this.button?.focus();
+			}
+		}
+
+		focusFirstItem() {
+			this.focusableElements[0]?.focus();
+		}
+
+		updateMenuState() {
+			if (!this.menu || !this.button) return;
+
+			this.menu.classList.toggle("hidden", !this.isOpen);
+			this.menu.hidden = !this.isOpen;
+			this.button.setAttribute("aria-expanded", this.isOpen.toString());
+			this.button.setAttribute(
+				"aria-label",
+				this.isOpen ? "メニューを閉じる" : "メニューを開く",
+			);
+			this.hamburgerIcon?.classList.toggle("hidden", this.isOpen);
+			this.closeIcon?.classList.toggle("hidden", !this.isOpen);
+			document.body.style.overflow = this.isOpen ? "hidden" : "";
+		}
+	}
+
+	if (!customElements.get("mobile-menu")) {
+		customElements.define("mobile-menu", MobileMenu);
+	}
+
+	document.addEventListener("astro:page-load", () => {
+		const mobileMenuElement = document.querySelector("mobile-menu");
+		if (mobileMenuElement && mobileMenuElement instanceof MobileMenu) {
+			mobileMenuElement.closeMenu({ restoreFocus: false });
+		}
+	});
+</script>

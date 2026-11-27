@@ -1,0 +1,62 @@
+---
+import { faFacebook, faGithub } from "@fortawesome/free-brands-svg-icons";
+---
+
+<footer class="mt-16 border-t border-black/8 bg-[#141414] text-white">
+	<div class="site-shell py-14">
+		<div class="grid gap-12 md:grid-cols-[1fr_auto] md:items-end">
+			<div class="max-w-2xl">
+				<p class="brand-kicker mb-5 text-white/60">K-HACK Inc.</p>
+				<h2 class="text-3xl font-extrabold tracking-[-0.04em] md:text-4xl">
+					株式会社k-Hack
+				</h2>
+				<p class="mt-4 max-w-xl text-sm leading-7 text-white/70 md:text-base">
+					株式会社k-Hackは、システム開発、地域DX支援、人材育成に取り組んでいます。
+				</p>
+			</div>
+
+			<div class="grid gap-8 sm:grid-cols-2">
+				<div>
+					<p class="text-xs font-bold uppercase tracking-[0.28em] text-white/45">
+						所在地
+					</p>
+					<address class="mt-3 not-italic text-sm leading-7 text-white/72">
+						〒085-0015
+						<br />
+						北海道釧路市北大通3丁目7-3
+					</address>
+				</div>
+				<div>
+					<p class="text-xs font-bold uppercase tracking-[0.28em] text-white/45">
+						関連リンク
+					</p>
+					<div class="mt-3 flex gap-3">
+						<a
+							href="https://www.facebook.com/khack.inc"
+							aria-label="Facebook（外部サイト）"
+							class="inline-flex h-11 w-11 items-center justify-center border border-white/18 text-white/80 transition hover:border-brand-red hover:bg-brand-red hover:text-white"
+						>
+							<svg width="24" height="24" viewBox="0 0 512 512" class="h-5 w-5" fill="currentColor">
+								<path d={faFacebook.icon[4] as string}></path>
+							</svg>
+						</a>
+						<a
+							href="https://github.com/khackinc"
+							aria-label="GitHub（外部サイト）"
+							class="inline-flex h-11 w-11 items-center justify-center border border-white/18 text-white/80 transition hover:border-brand-red hover:bg-brand-red hover:text-white"
+						>
+							<svg width="24" height="24" viewBox="0 0 512 512" class="h-5 w-5" fill="currentColor">
+								<path d={faGithub.icon[4] as string}></path>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs uppercase tracking-[0.24em] text-white/45 md:flex-row md:items-center md:justify-between">
+			<p>&copy; 2026 K-HACK Inc.</p>
+			<p>システム開発 / 地域DX支援 / 人材育成</p>
+		</div>
+	</div>
+</footer>
