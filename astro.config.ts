@@ -4,6 +4,7 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
 	site: 'https://deroxas-nalyn.github.io',
   	base: '/K-hack-staging',
+	trailingSlash: 'always',
 	// site: "https://k-hack.co.jp",
 	integrations: [],
 	markdown: {
