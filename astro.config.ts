@@ -2,7 +2,9 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-	site: "https://k-hack.co.jp",
+	site: 'https://deroxas-nalyn.github.io',
+  	base: '/K-hack-staging',
+	// site: "https://k-hack.co.jp",
 	integrations: [],
 	markdown: {
 		shikiConfig: {
@@ -13,9 +15,4 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwindcss()],
 	},
-});
-
-export default defineConfig({
-  site: 'https://deroxas-nalyn.github.io,
-  base: '/K-hack-staging',
 });
