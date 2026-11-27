@@ -5,11 +5,11 @@ import MobileMenu from "./MobileMenu.astro";
 const BASE = import.meta.env.BASE_URL;
 
 const navLinks = [
-  { href: `$DIL0about/`, text: "会社概要" },
-  { href: `$DIL1#services`, text: "事業内容" },
-  { href: `$DIL2members/`, text: "メンバー" },
-  { href: `$DIL3news/`, text: "ニュース" },
-  { href: `$DIL4contact/`, text: "お問い合わせ" },
+  { href: BASE + 'about/', text: "会社概要" },
+  { href: BASE + '#services', text: "事業内容" },
+  { href: BASE + 'members/', text: "メンバー" },
+  { href: BASE + 'news/', text: "ニュース" },
+  { href: BASE + 'contact/', text: "お問い合わせ" },
 ];
 
 
