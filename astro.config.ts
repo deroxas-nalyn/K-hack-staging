@@ -14,3 +14,8 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 	},
 });
+
+export default defineConfig({
+  site: 'https://deroxas-nalyn.github.io,
+  base: '/K-hack-staging',
+});
