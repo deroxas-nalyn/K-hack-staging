@@ -3,12 +3,13 @@ import Logo from "./icons/Logo.astro";
 import MobileMenu from "./MobileMenu.astro";
 
 const navLinks = [
-	{ href: "/about", text: "会社概要" },
-	{ href: "/#services", text: "事業内容" },
-	{ href: "/members", text: "メンバー" },
-	{ href: "/news", text: "ニュース" },
-	{ href: "/contact", text: "お問い合わせ" },
+	{ href: "${BASE}about/", text: "会社概要" },
+	{ href: "${BASE}#services/", text: "事業内容" },
+	{ href: "${BASE}members/", text: "メンバー" },
+	{ href: "${BASE}news/", text: "ニュース" },
+	{ href: "${BASE}contact/", text: "お問い合わせ" },
 ];
+
 
 const actionButtons = [
 	{
