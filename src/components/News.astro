@@ -7,6 +7,9 @@ const newsEntries = await getCollection("news");
 const sortedNews = newsEntries.sort(
 	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
+
+const BASE = import.meta.env.BASE_URL;
+
 ---
 
 <section id="news" class="section-shell border-t border-black/8 bg-white/40">
@@ -18,7 +21,7 @@ const sortedNews = newsEntries.sort(
           title={news.data.title}
           date={news.data.date}
           description={news.data.description}
-          linkUrl={`/news/${news.slug}`}
+          linkUrl={`BASE + /news/${news.slug}`}
           type="news"
         />
       ))}
